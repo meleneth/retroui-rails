@@ -17,6 +17,12 @@ module RetroUI
           app.config.assets.precompile += %w[
             retro_ui/rails/theme.css
             retro_ui/rails/controllers/toast_controller.js
+            retro_ui/rails/controllers/accordion_controller.js
+            retro_ui/rails/controllers/tabs_controller.js
+            retro_ui/rails/controllers/dialog_controller.js
+            retro_ui/rails/controllers/dropdown_menu_controller.js
+            retro_ui/rails/controllers/popover_controller.js
+            retro_ui/rails/controllers/tooltip_controller.js
           ]
         end
       end

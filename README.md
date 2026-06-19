@@ -150,16 +150,34 @@ rails generate retro_ui:vendor
 <% end %>
 ```
 
-Hotwire-backed components use Stimulus controllers. Register the toast controller with your Stimulus application:
+Hotwire-backed components use Stimulus controllers. Register the controllers you use with your Stimulus application:
 
 ```ruby
 # config/importmap.rb
+pin "retro_ui/rails/controllers/accordion_controller", to: "retro_ui/rails/controllers/accordion_controller.js"
+pin "retro_ui/rails/controllers/tabs_controller", to: "retro_ui/rails/controllers/tabs_controller.js"
+pin "retro_ui/rails/controllers/dialog_controller", to: "retro_ui/rails/controllers/dialog_controller.js"
+pin "retro_ui/rails/controllers/dropdown_menu_controller", to: "retro_ui/rails/controllers/dropdown_menu_controller.js"
+pin "retro_ui/rails/controllers/popover_controller", to: "retro_ui/rails/controllers/popover_controller.js"
+pin "retro_ui/rails/controllers/tooltip_controller", to: "retro_ui/rails/controllers/tooltip_controller.js"
 pin "retro_ui/rails/controllers/toast_controller", to: "retro_ui/rails/controllers/toast_controller.js"
 ```
 
 ```js
+import AccordionController from "retro_ui/rails/controllers/accordion_controller"
+import TabsController from "retro_ui/rails/controllers/tabs_controller"
+import DialogController from "retro_ui/rails/controllers/dialog_controller"
+import DropdownMenuController from "retro_ui/rails/controllers/dropdown_menu_controller"
+import PopoverController from "retro_ui/rails/controllers/popover_controller"
+import TooltipController from "retro_ui/rails/controllers/tooltip_controller"
 import ToastController from "retro_ui/rails/controllers/toast_controller"
 
+application.register("retro-ui--accordion", AccordionController)
+application.register("retro-ui--tabs", TabsController)
+application.register("retro-ui--dialog", DialogController)
+application.register("retro-ui--dropdown-menu", DropdownMenuController)
+application.register("retro-ui--popover", PopoverController)
+application.register("retro-ui--tooltip", TooltipController)
 application.register("retro-ui--toast", ToastController)
 ```
 
@@ -179,7 +197,7 @@ rails generate retro_ui:vendor
 
 Files are copied to `app/components/retro_ui`, `app/javascript/controllers/retro_ui`, and `app/assets/stylesheets/retro_ui/theme.css`. Namespaces are rewritten from `RetroUI::Rails` to `RetroUI`, so vendored components are application code and do not depend on the engine namespace.
 
-Vendored components currently include button, card, badge, alert, input, textarea, label, checkbox, radio, select, separator, skeleton, progress, table, avatar, aspect ratio, breadcrumb, pagination, typography, code, kbd, switch, and toast primitives.
+Vendored components currently include button, card, badge, alert, input, textarea, label, checkbox, radio, select, separator, skeleton, progress, table, avatar, aspect ratio, breadcrumb, pagination, typography, code, kbd, switch, accordion, tabs, dialog, dropdown menu, popover, tooltip, and toast primitives.
 
 Existing files are not overwritten unless you pass `--force`:
 

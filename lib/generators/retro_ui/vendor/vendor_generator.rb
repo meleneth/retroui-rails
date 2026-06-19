@@ -109,9 +109,67 @@ module RetroUI
         toast_description_component.html.erb
         toast_close_component.rb
         toast_close_component.html.erb
+        accordion_component.rb
+        accordion_component.html.erb
+        accordion_item_component.rb
+        accordion_item_component.html.erb
+        accordion_trigger_component.rb
+        accordion_trigger_component.html.erb
+        accordion_content_component.rb
+        accordion_content_component.html.erb
+        tabs_component.rb
+        tabs_component.html.erb
+        tabs_list_component.rb
+        tabs_list_component.html.erb
+        tabs_trigger_component.rb
+        tabs_trigger_component.html.erb
+        tabs_content_component.rb
+        tabs_content_component.html.erb
+        dialog_component.rb
+        dialog_component.html.erb
+        dialog_trigger_component.rb
+        dialog_trigger_component.html.erb
+        dialog_content_component.rb
+        dialog_content_component.html.erb
+        dialog_close_component.rb
+        dialog_close_component.html.erb
+        dialog_header_component.rb
+        dialog_header_component.html.erb
+        dialog_title_component.rb
+        dialog_title_component.html.erb
+        dialog_description_component.rb
+        dialog_description_component.html.erb
+        dialog_footer_component.rb
+        dialog_footer_component.html.erb
+        dropdown_menu_component.rb
+        dropdown_menu_component.html.erb
+        dropdown_menu_trigger_component.rb
+        dropdown_menu_trigger_component.html.erb
+        dropdown_menu_content_component.rb
+        dropdown_menu_content_component.html.erb
+        dropdown_menu_item_component.rb
+        dropdown_menu_item_component.html.erb
+        popover_component.rb
+        popover_component.html.erb
+        popover_trigger_component.rb
+        popover_trigger_component.html.erb
+        popover_content_component.rb
+        popover_content_component.html.erb
+        tooltip_component.rb
+        tooltip_component.html.erb
+        tooltip_trigger_component.rb
+        tooltip_trigger_component.html.erb
+        tooltip_content_component.rb
+        tooltip_content_component.html.erb
       ].freeze
 
       CONTROLLER_FILES = %w[
+        accordion_controller.js
+        tabs_controller.js
+        dialog_controller.js
+        dropdown_menu_controller.js
+        popover_controller.js
+        tooltip_controller.js
         toast_controller.js
       ].freeze
 

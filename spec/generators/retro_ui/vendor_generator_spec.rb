@@ -44,7 +44,19 @@ RSpec.describe RetroUI::Generators::VendorGenerator, type: :generator do
     expect(destination_file("app/components/retro_ui/switch_component.rb")).to exist
     expect(destination_file("app/components/retro_ui/toast_component.rb")).to exist
     expect(destination_file("app/components/retro_ui/toast_close_component.html.erb")).to exist
+    expect(destination_file("app/components/retro_ui/accordion_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/tabs_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/dialog_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/dropdown_menu_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/popover_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/tooltip_component.rb")).to exist
     expect(destination_file("app/assets/stylesheets/retro_ui/theme.css")).to exist
+    expect(destination_file("app/javascript/controllers/retro_ui/accordion_controller.js")).to exist
+    expect(destination_file("app/javascript/controllers/retro_ui/tabs_controller.js")).to exist
+    expect(destination_file("app/javascript/controllers/retro_ui/dialog_controller.js")).to exist
+    expect(destination_file("app/javascript/controllers/retro_ui/dropdown_menu_controller.js")).to exist
+    expect(destination_file("app/javascript/controllers/retro_ui/popover_controller.js")).to exist
+    expect(destination_file("app/javascript/controllers/retro_ui/tooltip_controller.js")).to exist
     expect(destination_file("app/javascript/controllers/retro_ui/toast_controller.js")).to exist
   end
 

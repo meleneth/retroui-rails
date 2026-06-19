@@ -37,7 +37,100 @@
         }
       }
 
+      class AccordionController extends Controller {
+        static targets = ["trigger", "content"]
+        static values = { multiple: { type: Boolean, default: false } }
+
+        toggle(event) {
+          const trigger = event.currentTarget
+          const index = this.triggerTargets.indexOf(trigger)
+          const content = this.contentTargets[index]
+          const opening = trigger.getAttribute("aria-expanded") !== "true"
+          if (!this.multipleValue) this.closeAll()
+          this.setOpen(trigger, content, opening)
+        }
+
+        closeAll() {
+          this.triggerTargets.forEach((trigger, index) => this.setOpen(trigger, this.contentTargets[index], false))
+        }
+
+        setOpen(trigger, content, open) {
+          trigger.setAttribute("aria-expanded", open ? "true" : "false")
+          if (content) content.hidden = !open
+        }
+      }
+
+      class TabsController extends Controller {
+        static targets = ["trigger", "content"]
+        static values = { defaultValue: String }
+
+        connect() {
+          const first = this.triggerTargets[0]
+          const value = this.hasDefaultValueValue ? this.defaultValueValue : first?.dataset.retroUiTabsValueParam
+          if (value) this.activate(value)
+        }
+
+        select(event) {
+          this.activate(event.params.value)
+        }
+
+        activate(value) {
+          this.triggerTargets.forEach((trigger) => {
+            const active = trigger.dataset.retroUiTabsValueParam === value
+            trigger.dataset.state = active ? "active" : "inactive"
+            trigger.setAttribute("aria-selected", active ? "true" : "false")
+          })
+          this.contentTargets.forEach((content) => {
+            content.hidden = content.dataset.retroUiTabsValue !== value
+          })
+        }
+      }
+
+      class DialogController extends Controller {
+        static targets = ["panel"]
+
+        open() {
+          this.panelTarget.hidden = false
+        }
+
+        close() {
+          this.panelTarget.hidden = true
+        }
+
+        backdropClose(event) {
+          if (event.target === this.panelTarget) this.close()
+        }
+      }
+
+      class ToggleContentController extends Controller {
+        static targets = ["content"]
+
+        toggle(event) {
+          event.preventDefault()
+          this.contentTarget.hidden = !this.contentTarget.hidden
+          event.currentTarget.setAttribute("aria-expanded", this.contentTarget.hidden ? "false" : "true")
+        }
+      }
+
+      class TooltipController extends Controller {
+        static targets = ["content"]
+
+        show() {
+          this.contentTarget.hidden = false
+        }
+
+        hide() {
+          this.contentTarget.hidden = true
+        }
+      }
+
       const application = Application.start()
+      application.register("retro-ui--accordion", AccordionController)
+      application.register("retro-ui--tabs", TabsController)
+      application.register("retro-ui--dialog", DialogController)
+      application.register("retro-ui--dropdown-menu", ToggleContentController)
+      application.register("retro-ui--popover", ToggleContentController)
+      application.register("retro-ui--tooltip", TooltipController)
       application.register("retro-ui--toast", ToastController)
     </script>
     <style type="text/tailwindcss">
@@ -117,6 +210,100 @@
           <%= render RetroUI::Rails::ButtonComponent.new(label: "Link", variant: :link) %>
           <%= render RetroUI::Rails::ButtonComponent.new(label: "Delete", variant: :destructive) %>
           <%= render RetroUI::Rails::ButtonComponent.new(label: "Docs", href: "/components", size: :sm) %>
+        </div>
+      </section>
+
+      <section>
+        <%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Hotwire") %>
+        <div class="demo-grid">
+          <%= render RetroUI::Rails::CardComponent.new do %>
+            <%= render RetroUI::Rails::CardHeaderComponent.new do %>
+              <%= render RetroUI::Rails::CardTitleComponent.new do %>Accordion<% end %>
+            <% end %>
+            <%= render RetroUI::Rails::CardContentComponent.new do %>
+              <%= render RetroUI::Rails::AccordionComponent.new do %>
+                <%= render RetroUI::Rails::AccordionItemComponent.new do %>
+                  <%= render RetroUI::Rails::AccordionTriggerComponent.new(text: "What powers this?") %>
+                  <%= render RetroUI::Rails::AccordionContentComponent.new do %>
+                    ViewComponent markup and a tiny Stimulus controller.
+                  <% end %>
+                <% end %>
+                <%= render RetroUI::Rails::AccordionItemComponent.new do %>
+                  <%= render RetroUI::Rails::AccordionTriggerComponent.new(text: "Can I vendor it?") %>
+                  <%= render RetroUI::Rails::AccordionContentComponent.new do %>
+                    Yes. Components and controllers are copied into app-owned paths.
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+
+          <%= render RetroUI::Rails::CardComponent.new do %>
+            <%= render RetroUI::Rails::CardHeaderComponent.new do %>
+              <%= render RetroUI::Rails::CardTitleComponent.new do %>Tabs<% end %>
+            <% end %>
+            <%= render RetroUI::Rails::CardContentComponent.new do %>
+              <%= render RetroUI::Rails::TabsComponent.new(default_value: "stats") do %>
+                <%= render RetroUI::Rails::TabsListComponent.new do %>
+                  <%= render RetroUI::Rails::TabsTriggerComponent.new(value: "stats", text: "Stats") %>
+                  <%= render RetroUI::Rails::TabsTriggerComponent.new(value: "gear", text: "Gear") %>
+                <% end %>
+                <%= render RetroUI::Rails::TabsContentComponent.new(value: "stats") do %>
+                  Strength: questionable. Confidence: high.
+                <% end %>
+                <%= render RetroUI::Rails::TabsContentComponent.new(value: "gear") do %>
+                  One yellow button and a stubborn border.
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+
+          <%= render RetroUI::Rails::CardComponent.new do %>
+            <%= render RetroUI::Rails::CardHeaderComponent.new do %>
+              <%= render RetroUI::Rails::CardTitleComponent.new do %>Overlays<% end %>
+            <% end %>
+            <%= render RetroUI::Rails::CardContentComponent.new do %>
+              <div class="demo-row">
+                <%= render RetroUI::Rails::DialogComponent.new do %>
+                  <%= render RetroUI::Rails::DialogTriggerComponent.new(label: "Dialog") %>
+                  <%= render RetroUI::Rails::DialogContentComponent.new do %>
+                    <%= render RetroUI::Rails::DialogCloseComponent.new %>
+                    <%= render RetroUI::Rails::DialogHeaderComponent.new do %>
+                      <%= render RetroUI::Rails::DialogTitleComponent.new(text: "Modal Save Point") %>
+                      <%= render RetroUI::Rails::DialogDescriptionComponent.new(text: "Hotwire opens this without React or Node.") %>
+                    <% end %>
+                    <%= render RetroUI::Rails::DialogFooterComponent.new do %>
+                      <%= render RetroUI::Rails::ButtonComponent.new(label: "Nice", size: :sm) %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+                <%= render RetroUI::Rails::DropdownMenuComponent.new do %>
+                  <%= render RetroUI::Rails::DropdownMenuTriggerComponent.new(label: "Menu") %>
+                  <%= render RetroUI::Rails::DropdownMenuContentComponent.new do %>
+                    <%= render RetroUI::Rails::DropdownMenuItemComponent.new(text: "Profile") %>
+                    <%= render RetroUI::Rails::DropdownMenuItemComponent.new(text: "Settings") %>
+                    <%= render RetroUI::Rails::DropdownMenuItemComponent.new(text: "Logout") %>
+                  <% end %>
+                <% end %>
+
+                <%= render RetroUI::Rails::PopoverComponent.new do %>
+                  <%= render RetroUI::Rails::PopoverTriggerComponent.new(label: "Popover") %>
+                  <%= render RetroUI::Rails::PopoverContentComponent.new do %>
+                    Small contextual surfaces are Stimulus toggles too.
+                  <% end %>
+                <% end %>
+              </div>
+              <p style="margin-top: 16px;">
+                Hover
+                <%= render RetroUI::Rails::TooltipComponent.new do %>
+                  <%= render RetroUI::Rails::TooltipTriggerComponent.new(text: "this text") %>
+                  <%= render RetroUI::Rails::TooltipContentComponent.new(text: "Tooltip via Stimulus") %>
+                <% end %>
+                for a tooltip.
+              </p>
+            <% end %>
+          <% end %>
         </div>
       </section>
 

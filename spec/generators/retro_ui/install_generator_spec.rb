@@ -27,6 +27,7 @@ RSpec.describe RetroUI::Generators::InstallGenerator, type: :generator do
     expect(output).to include("Ensure Tailwind scans")
     expect(output).to include("rails generate retro_ui:vendor")
     expect(output).to include("Hotwire components require Stimulus")
+    expect(output).to include('pin "retro_ui/rails/controllers/accordion_controller"')
     expect(output).to include('pin "retro_ui/rails/controllers/toast_controller"')
     expect(output).to include('application.register("retro-ui--toast", ToastController)')
   end
