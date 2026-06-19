@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ["contributors@example.com"]
 
   spec.summary = "RetroUI components for Rails and ViewComponent."
-  spec.description = "A Tailwind-first Rails/ViewComponent port of RetroUI."
+  spec.description = "A Tailwind-first Rails/ViewComponent port of RetroUI, inspired by the original MIT-licensed RetroUI project by Arif Hossain and contributors."
   spec.homepage = "https://github.com/Logging-Studio/retroui-rails"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.1.0"
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = spec.homepage
 
   spec.files = Dir.chdir(__dir__) do
-    Dir["{app,lib,spec}/**/*", "Gemfile", "README.md", "retroui-rails.gemspec"]
+    Dir["{app,lib,spec}/**/*", "Gemfile", "LICENSE", "NOTICE.md", "README.md", "retroui-rails.gemspec"]
   end
   spec.require_paths = ["lib"]
 

@@ -26,9 +26,10 @@ module RetroUI
         say "Vendored components are app-owned and should be included by the app/components globs above."
         say ""
         say "Hotwire components require Stimulus. Pin and register the controllers you use:"
-        %w[accordion tabs dialog dropdown_menu popover tooltip toast].each do |name|
+        %w[accordion chart tabs dialog dropdown_menu popover tooltip toast].each do |name|
           say %(  pin "retro_ui/rails/controllers/#{name}_controller", to: "retro_ui/rails/controllers/#{name}_controller.js")
         end
+        say '  pin "d3", to: "https://cdn.jsdelivr.net/npm/d3@7/+esm"'
         say '  import ToastController from "retro_ui/rails/controllers/toast_controller"'
         say '  application.register("retro-ui--toast", ToastController)'
         say ""

@@ -81,6 +81,11 @@ require_relative "../../app/components/retro_ui/rails/popover_content_component"
 require_relative "../../app/components/retro_ui/rails/tooltip_component"
 require_relative "../../app/components/retro_ui/rails/tooltip_trigger_component"
 require_relative "../../app/components/retro_ui/rails/tooltip_content_component"
+require_relative "../../app/components/retro_ui/rails/chart_component"
+require_relative "../../app/components/retro_ui/rails/area_chart_component"
+require_relative "../../app/components/retro_ui/rails/bar_chart_component"
+require_relative "../../app/components/retro_ui/rails/line_chart_component"
+require_relative "../../app/components/retro_ui/rails/pie_chart_component"
 
 module RetroUI
   module Rails

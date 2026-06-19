@@ -50,8 +50,13 @@ RSpec.describe RetroUI::Generators::VendorGenerator, type: :generator do
     expect(destination_file("app/components/retro_ui/dropdown_menu_component.rb")).to exist
     expect(destination_file("app/components/retro_ui/popover_component.rb")).to exist
     expect(destination_file("app/components/retro_ui/tooltip_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/bar_chart_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/area_chart_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/line_chart_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/pie_chart_component.rb")).to exist
     expect(destination_file("app/assets/stylesheets/retro_ui/theme.css")).to exist
     expect(destination_file("app/javascript/controllers/retro_ui/accordion_controller.js")).to exist
+    expect(destination_file("app/javascript/controllers/retro_ui/chart_controller.js")).to exist
     expect(destination_file("app/javascript/controllers/retro_ui/tabs_controller.js")).to exist
     expect(destination_file("app/javascript/controllers/retro_ui/dialog_controller.js")).to exist
     expect(destination_file("app/javascript/controllers/retro_ui/dropdown_menu_controller.js")).to exist
@@ -69,6 +74,9 @@ RSpec.describe RetroUI::Generators::VendorGenerator, type: :generator do
     expect(content).not_to include("module Rails")
     expect(content).not_to include("RetroUI::ClassNames")
     expect(content).to include("def class_names(*values)")
+
+    chart_content = destination_file("app/components/retro_ui/area_chart_component.rb").read
+    expect(chart_content).to include("class RetroUI::AreaChartComponent < RetroUI::ChartComponent")
   end
 
   it "copies Stimulus controllers" do

@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script type="module">
       import { Application, Controller } from "https://cdn.jsdelivr.net/npm/@hotwired/stimulus@3.2.2/+esm"
+      import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm"
 
       class ToastController extends Controller {
         static values = {
@@ -34,6 +35,28 @@
               this.element.hidden = true
             }
           }, 200)
+        }
+      }
+
+      class ThemeController extends Controller {
+        static targets = ["label"]
+
+        connect() {
+          const saved = window.localStorage.getItem("retroui-demo-theme")
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+          this.setTheme(saved || (prefersDark ? "dark" : "light"))
+        }
+
+        toggle() {
+          this.setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark")
+        }
+
+        setTheme(theme) {
+          document.documentElement.dataset.theme = theme
+          window.localStorage.setItem("retroui-demo-theme", theme)
+          if (this.hasLabelTarget) {
+            this.labelTarget.textContent = theme === "dark" ? "Light Mode" : "Dark Mode"
+          }
         }
       }
 
@@ -124,12 +147,63 @@
         }
       }
 
+      class ChartController extends Controller {
+        static targets = ["svg"]
+        static values = { data: Array, type: String, xKey: String, yKey: String, labelKey: String, valueKey: String }
+
+        connect() {
+          this.render()
+        }
+
+        render() {
+          const svg = d3.select(this.svgTarget)
+          svg.selectAll("*").remove()
+          const width = this.svgTarget.clientWidth || 640
+          const height = Number(this.svgTarget.getAttribute("height")) || 300
+          this.svgTarget.setAttribute("viewBox", `0 0 ${width} ${height}`)
+          if (this.typeValue === "pie") return this.renderPie(svg, width, height)
+
+          const margin = { top: 10, right: 14, bottom: 34, left: 42 }
+          const innerWidth = width - margin.left - margin.right
+          const innerHeight = height - margin.top - margin.bottom
+          const data = this.dataValue.map((item) => ({ label: String(item[this.xKeyValue]), value: Number(item[this.yKeyValue]) || 0 }))
+          const x = d3.scaleBand().domain(data.map((item) => item.label)).range([0, innerWidth]).padding(0.22)
+          const y = d3.scaleLinear().domain([0, d3.max(data, (item) => item.value) || 1]).nice().range([innerHeight, 0])
+          const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`)
+          g.append("g").attr("transform", `translate(0,${innerHeight})`).call(d3.axisBottom(x).tickSizeOuter(0))
+          g.append("g").call(d3.axisLeft(y).ticks(4).tickSizeOuter(0))
+          g.selectAll("path,line").attr("stroke", "hsl(var(--border))").attr("stroke-width", 2)
+          g.selectAll("text").attr("class", "fill-foreground text-xs")
+
+          if (this.typeValue === "line" || this.typeValue === "area") {
+            const centered = (item) => x(item.label) + x.bandwidth() / 2
+            if (this.typeValue === "area") {
+              g.append("path").datum(data).attr("d", d3.area().x(centered).y0(innerHeight).y1((item) => y(item.value)).curve(d3.curveMonotoneX)).attr("fill", "hsl(var(--primary) / 0.35)").attr("stroke", "hsl(var(--border))").attr("stroke-width", 2)
+            } else {
+              g.append("path").datum(data).attr("d", d3.line().x(centered).y((item) => y(item.value)).curve(d3.curveMonotoneX)).attr("fill", "none").attr("stroke", "hsl(var(--primary))").attr("stroke-width", 3)
+            }
+          } else {
+            g.selectAll("rect").data(data).join("rect").attr("x", (item) => x(item.label)).attr("y", (item) => y(item.value)).attr("width", x.bandwidth()).attr("height", (item) => innerHeight - y(item.value)).attr("fill", "hsl(var(--primary))").attr("stroke", "hsl(var(--border))").attr("stroke-width", 2)
+          }
+        }
+
+        renderPie(svg, width, height) {
+          const data = this.dataValue.map((item) => ({ label: String(item[this.labelKeyValue]), value: Number(item[this.valueKeyValue]) || 0 }))
+          const radius = Math.min(width, height) / 2 - 14
+          const color = d3.scaleOrdinal().range(["hsl(var(--primary))", "hsl(var(--secondary))", "hsl(var(--accent))", "hsl(var(--muted))"])
+          const g = svg.append("g").attr("transform", `translate(${width / 2},${height / 2})`)
+          g.selectAll("path").data(d3.pie().value((item) => item.value)(data)).join("path").attr("d", d3.arc().innerRadius(0).outerRadius(radius)).attr("fill", (item) => color(item.data.label)).attr("stroke", "hsl(var(--border))").attr("stroke-width", 2)
+        }
+      }
+
       const application = Application.start()
       application.register("retro-ui--accordion", AccordionController)
+      application.register("retro-ui--chart", ChartController)
       application.register("retro-ui--tabs", TabsController)
       application.register("retro-ui--dialog", DialogController)
       application.register("retro-ui--dropdown-menu", ToggleContentController)
       application.register("retro-ui--popover", ToggleContentController)
+      application.register("retro-ui--theme", ThemeController)
       application.register("retro-ui--tooltip", TooltipController)
       application.register("retro-ui--toast", ToastController)
     </script>
@@ -179,18 +253,45 @@
         --shadow-2xl: 12px 12px 0 0 hsl(var(--border));
       }
 
+      [data-theme="dark"] {
+        color-scheme: dark;
+        --background: 230 24% 8%;
+        --foreground: 52 100% 92%;
+        --card: 230 22% 12%;
+        --card-foreground: 52 100% 92%;
+        --primary: 52 100% 54%;
+        --primary-foreground: 230 24% 8%;
+        --secondary: 190 95% 52%;
+        --secondary-foreground: 230 24% 8%;
+        --muted: 230 16% 22%;
+        --muted-foreground: 52 24% 76%;
+        --accent: 330 100% 68%;
+        --accent-foreground: 230 24% 8%;
+        --destructive: 0 84% 62%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 52 100% 88%;
+      }
+
       body { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif; background: hsl(var(--background)); color: hsl(var(--foreground)); }
       main { max-width: 1120px; margin: 0 auto; padding: 32px; }
       section { margin-top: 32px; padding-top: 24px; border-top: 2px solid hsl(var(--border)); }
       .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; align-items: start; }
       .demo-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+      .demo-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
       .demo-stack { display: grid; gap: 12px; }
     </style>
   </head>
-  <body>
+  <body data-controller="retro-ui--theme">
     <main>
-      <%= render RetroUI::Rails::TypographyComponent.new(as: :h1, text: "RetroUI Rails") %>
-      <%= render RetroUI::Rails::TypographyComponent.new(as: :lead, text: "A Tailwind-first ViewComponent port of RetroUI primitives.") %>
+      <div class="demo-header">
+        <div>
+          <%= render RetroUI::Rails::TypographyComponent.new(as: :h1, text: "RetroUI Rails") %>
+          <%= render RetroUI::Rails::TypographyComponent.new(as: :lead, text: "A Tailwind-first ViewComponent port of RetroUI primitives.") %>
+        </div>
+        <%= render RetroUI::Rails::ButtonComponent.new(variant: :secondary, size: :sm, html_options: { type: "button", data: { action: "retro-ui--theme#toggle" } }) do %>
+          <span data-retro-ui--theme-target="label">Dark Mode</span>
+        <% end %>
+      </div>
 
       <%= render RetroUI::Rails::ToastViewportComponent.new do %>
         <%= render RetroUI::Rails::ToastComponent.new(duration: 0) do %>
@@ -455,6 +556,35 @@
             after running <%= render RetroUI::Rails::CodeComponent.new(text: "rails generate retro_ui:vendor") %>.
           </p>
           <%= render RetroUI::Rails::TypographyComponent.new(as: :blockquote, text: "Own your components. Modify them without asking permission." ) %>
+        </div>
+      </section>
+
+      <section>
+        <%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Charts") %>
+        <div class="demo-grid">
+          <%= render RetroUI::Rails::BarChartComponent.new(
+            title: "Shipments",
+            description: "D3 rendered from ViewComponent data.",
+            data: [
+              { month: "Jan", count: 12 },
+              { month: "Feb", count: 18 },
+              { month: "Mar", count: 9 },
+              { month: "Apr", count: 24 }
+            ],
+            x_key: :month,
+            y_key: :count
+          ) %>
+
+          <%= render RetroUI::Rails::PieChartComponent.new(
+            title: "Plan Mix",
+            data: [
+              { plan: "Free", users: 32 },
+              { plan: "Pro", users: 18 },
+              { plan: "Team", users: 9 }
+            ],
+            label_key: :plan,
+            value_key: :users
+          ) %>
         </div>
       </section>
 

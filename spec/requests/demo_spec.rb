@@ -10,5 +10,8 @@ RSpec.describe "Demo page", type: :request do
     expect(response.body).to include("RetroUI Rails")
     expect(response.body).to include("Autosave complete")
     expect(response.body).to include("Current component batches")
+    expect(response.body).to include('data-controller="retro-ui--theme"')
+    expect(response.body).to include('data-retro-ui--theme-target="label"')
+    expect(response.body).to include('[data-theme="dark"]')
   end
 end

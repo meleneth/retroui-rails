@@ -161,10 +161,21 @@ module RetroUI
         tooltip_trigger_component.html.erb
         tooltip_content_component.rb
         tooltip_content_component.html.erb
+        chart_component.rb
+        chart_component.html.erb
+        area_chart_component.rb
+        area_chart_component.html.erb
+        bar_chart_component.rb
+        bar_chart_component.html.erb
+        line_chart_component.rb
+        line_chart_component.html.erb
+        pie_chart_component.rb
+        pie_chart_component.html.erb
       ].freeze
 
       CONTROLLER_FILES = %w[
         accordion_controller.js
+        chart_controller.js
         tabs_controller.js
         dialog_controller.js
         dropdown_menu_controller.js
@@ -224,6 +235,7 @@ module RetroUI
         content = content.sub(/module RetroUI\n  module Rails\n    class ([^\n]+)\n/, "class RetroUI::\\1\n")
         content = content.sub(/\n    end\n  end\nend\n?\z/, "\nend\n")
         content = content.lines.map { |line| line.start_with?("      ") ? line[4..] : line }.join
+        content = content.gsub(" < ChartComponent", " < RetroUI::ChartComponent")
         content = content.sub(/^  include RetroUI::ClassNames\n\n/, "")
         content.sub(/\nend\n\z/, "\n#{vendored_class_names_helper}\nend\n")
       end

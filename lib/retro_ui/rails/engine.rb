@@ -18,6 +18,7 @@ module RetroUI
             retro_ui/rails/theme.css
             retro_ui/rails/controllers/toast_controller.js
             retro_ui/rails/controllers/accordion_controller.js
+            retro_ui/rails/controllers/chart_controller.js
             retro_ui/rails/controllers/tabs_controller.js
             retro_ui/rails/controllers/dialog_controller.js
             retro_ui/rails/controllers/dropdown_menu_controller.js
