@@ -27,6 +27,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "capybara"
   spec.add_development_dependency "nokogiri"
+  spec.add_development_dependency "puma", ">= 6.0"
   spec.add_development_dependency "rspec-rails", "< 8.0"
   spec.add_development_dependency "tzinfo-data"
 end

@@ -178,3 +178,12 @@ bundle exec rspec
 ```
 
 The test dummy app lives in `spec/dummy`.
+
+Run the dummy demo app:
+
+```sh
+cd spec/dummy
+bundle exec ruby bin/rails server -b 127.0.0.1 -p 3000
+```
+
+Then open `http://127.0.0.1:3000/`.

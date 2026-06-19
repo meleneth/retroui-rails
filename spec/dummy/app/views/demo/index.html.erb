@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RetroUI Rails Demo</title>
+    <style>
+      body { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif; background: #fff; color: #111; }
+      main { max-width: 1120px; margin: 0 auto; padding: 32px; }
+      section { margin-top: 32px; padding-top: 24px; border-top: 2px solid #111; }
+      .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; align-items: start; }
+      .demo-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+      .demo-stack { display: grid; gap: 12px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <%= render RetroUI::Rails::TypographyComponent.new(as: :h1, text: "RetroUI Rails") %>
+      <%= render RetroUI::Rails::TypographyComponent.new(as: :lead, text: "A Tailwind-first ViewComponent port of RetroUI primitives.") %>
+
+      <section>
+        <%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Buttons") %>
+        <div class="demo-row">
+          <%= render RetroUI::Rails::ButtonComponent.new(label: "Default") %>
+          <%= render RetroUI::Rails::ButtonComponent.new(label: "Secondary", variant: :secondary) %>
+          <%= render RetroUI::Rails::ButtonComponent.new(label: "Outline", variant: :outline) %>
+          <%= render RetroUI::Rails::ButtonComponent.new(label: "Ghost", variant: :ghost) %>
+          <%= render RetroUI::Rails::ButtonComponent.new(label: "Link", variant: :link) %>
+          <%= render RetroUI::Rails::ButtonComponent.new(label: "Delete", variant: :destructive) %>
+          <%= render RetroUI::Rails::ButtonComponent.new(label: "Docs", href: "/components", size: :sm) %>
+        </div>
+      </section>
+
+      <section>
+        <%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Badges And Alerts") %>
+        <div class="demo-stack">
+          <div class="demo-row">
+            <%= render RetroUI::Rails::BadgeComponent.new(label: "Default") %>
+            <%= render RetroUI::Rails::BadgeComponent.new(label: "Secondary", variant: :secondary) %>
+            <%= render RetroUI::Rails::BadgeComponent.new(label: "Outline", variant: :outline) %>
+            <%= render RetroUI::Rails::BadgeComponent.new(label: "Danger", variant: :destructive) %>
+          </div>
+
+          <%= render RetroUI::Rails::AlertComponent.new do %>
+            <%= render RetroUI::Rails::AlertTitleComponent.new do %>
+              Autosave complete
+            <% end %>
+            <%= render RetroUI::Rails::AlertDescriptionComponent.new do %>
+              Your progress is mostly imaginary, but it has been saved.
+            <% end %>
+          <% end %>
+
+          <%= render RetroUI::Rails::AlertComponent.new(variant: :destructive) do %>
+            <%= render RetroUI::Rails::AlertTitleComponent.new do %>
+              Danger zone
+            <% end %>
+            <%= render RetroUI::Rails::AlertDescriptionComponent.new do %>
+              This action has a very dramatic button nearby.
+            <% end %>
+          <% end %>
+        </div>
+      </section>
+
+      <section>
+        <%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Cards") %>
+        <div class="demo-grid">
+          <%= render RetroUI::Rails::CardComponent.new do %>
+            <%= render RetroUI::Rails::CardHeaderComponent.new do %>
+              <%= render RetroUI::Rails::CardTitleComponent.new do %>
+                Save Point
+              <% end %>
+              <%= render RetroUI::Rails::CardDescriptionComponent.new do %>
+                A compositional card made from explicit components.
+              <% end %>
+            <% end %>
+            <%= render RetroUI::Rails::CardContentComponent.new do %>
+              <div class="demo-row">
+                <%= render RetroUI::Rails::ButtonComponent.new(label: "Continue", size: :sm) %>
+                <%= render RetroUI::Rails::ButtonComponent.new(label: "Reset", variant: :outline, size: :sm) %>
+              </div>
+            <% end %>
+          <% end %>
+
+          <%= render RetroUI::Rails::CardComponent.new do %>
+            <%= render RetroUI::Rails::CardHeaderComponent.new do %>
+              <%= render RetroUI::Rails::CardTitleComponent.new do %>
+                Profile
+              <% end %>
+              <%= render RetroUI::Rails::CardDescriptionComponent.new do %>
+                Avatar and fallback primitives.
+              <% end %>
+            <% end %>
+            <%= render RetroUI::Rails::CardContentComponent.new do %>
+              <div class="demo-row">
+                <%= render RetroUI::Rails::AvatarComponent.new(html_options: { class: "h-12 w-12" }) do %>
+                  <%= render RetroUI::Rails::AvatarFallbackComponent.new(text: "RU") %>
+                <% end %>
+                <%= render RetroUI::Rails::BadgeComponent.new(label: "Online", variant: :secondary) %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </section>
+
+      <section>
+        <%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Forms") %>
+        <div class="demo-grid">
+          <div class="demo-stack">
+            <%= render RetroUI::Rails::LabelComponent.new(text: "Email", for_id: "email") %>
+            <%= render RetroUI::Rails::InputComponent.new(type: :email, name: "email", html_options: { id: "email", placeholder: "hero@example.com" }) %>
+            <%= render RetroUI::Rails::LabelComponent.new(text: "Message", for_id: "message") %>
+            <%= render RetroUI::Rails::TextareaComponent.new(name: "message", html_options: { id: "message", placeholder: "Write something..." }) %>
+            <%= render RetroUI::Rails::SelectComponent.new(name: "size", options: [["Small", "s"], ["Medium", "m"], ["Large", "l"]], selected: "m") %>
+          </div>
+
+          <div class="demo-stack">
+            <label class="demo-row">
+              <%= render RetroUI::Rails::CheckboxComponent.new(name: "confirm", checked: true) %>
+              Confirm quest rewards
+            </label>
+            <label class="demo-row">
+              <%= render RetroUI::Rails::RadioComponent.new(name: "plan", value: "starter", checked: true) %>
+              Starter
+            </label>
+            <label class="demo-row">
+              <%= render RetroUI::Rails::RadioComponent.new(name: "plan", value: "pro") %>
+              Pro
+            </label>
+            <label class="demo-row">
+              <%= render RetroUI::Rails::SwitchComponent.new(name: "enabled", checked: true) %>
+              Enable retro mode
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Navigation") %>
+        <div class="demo-stack">
+          <%= render RetroUI::Rails::BreadcrumbComponent.new do %>
+            <%= render RetroUI::Rails::BreadcrumbListComponent.new do %>
+              <%= render RetroUI::Rails::BreadcrumbItemComponent.new do %>
+                <%= render RetroUI::Rails::BreadcrumbLinkComponent.new(href: "/", text: "Home") %>
+              <% end %>
+              <%= render RetroUI::Rails::BreadcrumbSeparatorComponent.new %>
+              <%= render RetroUI::Rails::BreadcrumbItemComponent.new do %>
+                <%= render RetroUI::Rails::BreadcrumbPageComponent.new(text: "Components") %>
+              <% end %>
+            <% end %>
+          <% end %>
+
+          <%= render RetroUI::Rails::PaginationComponent.new do %>
+            <%= render RetroUI::Rails::PaginationContentComponent.new do %>
+              <%= render RetroUI::Rails::PaginationItemComponent.new do %>
+                <%= render RetroUI::Rails::PaginationLinkComponent.new(href: "?page=1", label: "1", active: true) %>
+              <% end %>
+              <%= render RetroUI::Rails::PaginationItemComponent.new do %>
+                <%= render RetroUI::Rails::PaginationLinkComponent.new(href: "?page=2", label: "2") %>
+              <% end %>
+              <%= render RetroUI::Rails::PaginationItemComponent.new do %>
+                <%= render RetroUI::Rails::PaginationLinkComponent.new(href: "?page=3", label: "3") %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </section>
+
+      <section>
+        <%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Utilities") %>
+        <div class="demo-stack">
+          <%= render RetroUI::Rails::AspectRatioComponent.new(ratio: "16/9", html_options: { class: "bg-muted border-2 border-black" }) do %>
+            <div style="display: grid; height: 100%; place-items: center;">16 / 9</div>
+          <% end %>
+          <%= render RetroUI::Rails::ProgressComponent.new(value: 42) %>
+          <%= render RetroUI::Rails::SkeletonComponent.new(html_options: { class: "h-10 w-full" }) %>
+          <%= render RetroUI::Rails::SeparatorComponent.new %>
+          <p>
+            Press <%= render RetroUI::Rails::KbdComponent.new(text: "K") %>
+            after running <%= render RetroUI::Rails::CodeComponent.new(text: "rails generate retro_ui:vendor") %>.
+          </p>
+          <%= render RetroUI::Rails::TypographyComponent.new(as: :blockquote, text: "Own your components. Modify them without asking permission." ) %>
+        </div>
+      </section>
+
+      <section>
+        <%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Table") %>
+        <%= render RetroUI::Rails::TableComponent.new do %>
+          <%= render RetroUI::Rails::TableCaptionComponent.new do %>
+            Current component batches
+          <% end %>
+          <%= render RetroUI::Rails::TableHeaderComponent.new do %>
+            <%= render RetroUI::Rails::TableRowComponent.new do %>
+              <%= render RetroUI::Rails::TableHeadComponent.new do %>
+                Batch
+              <% end %>
+              <%= render RetroUI::Rails::TableHeadComponent.new do %>
+                Status
+              <% end %>
+            <% end %>
+          <% end %>
+          <%= render RetroUI::Rails::TableBodyComponent.new do %>
+            <%= render RetroUI::Rails::TableRowComponent.new do %>
+              <%= render RetroUI::Rails::TableCellComponent.new do %>
+                Foundation
+              <% end %>
+              <%= render RetroUI::Rails::TableCellComponent.new do %>
+                Committed
+              <% end %>
+            <% end %>
+            <%= render RetroUI::Rails::TableRowComponent.new do %>
+              <%= render RetroUI::Rails::TableCellComponent.new do %>
+                No-JS primitives
+              <% end %>
+              <%= render RetroUI::Rails::TableCellComponent.new do %>
+                Committed
+              <% end %>
+            <% end %>
+          <% end %>
+          <%= render RetroUI::Rails::TableFooterComponent.new do %>
+            <%= render RetroUI::Rails::TableRowComponent.new do %>
+              <%= render RetroUI::Rails::TableCellComponent.new(html_options: { colspan: 2 }) do %>
+                Ready for Tailwind wiring
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </section>
+    </main>
+  </body>
+</html>
