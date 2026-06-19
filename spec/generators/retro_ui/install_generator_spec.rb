@@ -22,6 +22,7 @@ RSpec.describe RetroUI::Generators::InstallGenerator, type: :generator do
     generator.print_tailwind_instructions
     output = messages.join("\n")
 
+    expect(output).to include('gem "retroui-rails", git: "https://github.com/meleneth/retroui-rails.git"')
     expect(output).to include("RetroUI Rails requires Tailwind CSS")
     expect(output).to include('@import "retro_ui/rails/theme.css";')
     expect(output).to include("Ensure Tailwind scans")

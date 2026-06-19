@@ -8,6 +8,10 @@ module RetroUI
       desc "Print RetroUI Rails installation instructions."
 
       def print_tailwind_instructions
+        say "RetroUI Rails is installed from https://github.com/meleneth/retroui-rails.git.", :green
+        say "Gemfile:"
+        say '  gem "retroui-rails", git: "https://github.com/meleneth/retroui-rails.git"'
+        say ""
         say "RetroUI Rails requires Tailwind CSS. There is no Tailwind-free fallback.", :yellow
         say ""
         say "Add the RetroUI theme tokens to your compiled stylesheet:"

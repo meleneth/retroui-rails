@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "RetroUI components for Rails and ViewComponent."
   spec.description = "A Tailwind-first Rails/ViewComponent port of RetroUI, inspired by the original MIT-licensed RetroUI project by Arif Hossain and contributors."
-  spec.homepage = "https://github.com/Logging-Studio/retroui-rails"
+  spec.homepage = "https://github.com/meleneth/retroui-rails"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.1.0"
 

@@ -10,10 +10,12 @@ RetroUI is created by Arif Hossain and the RetroUI contributors at https://retro
 
 ## Installation
 
+This gem is intended to be installed from its Git repository, not from RubyGems.
+
 Add the gem to your Rails app:
 
 ```ruby
-gem "retroui-rails"
+gem "retroui-rails", git: "https://github.com/meleneth/retroui-rails.git"
 ```
 
 Then run:
@@ -21,6 +23,14 @@ Then run:
 ```sh
 bundle install
 rails generate retro_ui:install
+```
+
+Use a branch, tag, or commit ref in your Gemfile when you want to pin an app to a specific version of this repository:
+
+```ruby
+gem "retroui-rails",
+  git: "https://github.com/meleneth/retroui-rails.git",
+  branch: "main"
 ```
 
 `retroui-rails` depends on Rails, ViewComponent, and Stimulus for interactive Hotwire components. It does not require React, Node, or vendored fonts.
