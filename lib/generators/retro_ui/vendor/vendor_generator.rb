@@ -36,6 +36,34 @@ module RetroUI
         textarea_component.html.erb
         label_component.rb
         label_component.html.erb
+        checkbox_component.rb
+        checkbox_component.html.erb
+        radio_component.rb
+        radio_component.html.erb
+        select_component.rb
+        select_component.html.erb
+        separator_component.rb
+        separator_component.html.erb
+        skeleton_component.rb
+        skeleton_component.html.erb
+        progress_component.rb
+        progress_component.html.erb
+        table_component.rb
+        table_component.html.erb
+        table_header_component.rb
+        table_header_component.html.erb
+        table_body_component.rb
+        table_body_component.html.erb
+        table_footer_component.rb
+        table_footer_component.html.erb
+        table_row_component.rb
+        table_row_component.html.erb
+        table_head_component.rb
+        table_head_component.html.erb
+        table_cell_component.rb
+        table_cell_component.html.erb
+        table_caption_component.rb
+        table_caption_component.html.erb
       ].freeze
 
       def copy_components

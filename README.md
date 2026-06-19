@@ -70,6 +70,13 @@ rails generate retro_ui:vendor
 <%= render RetroUI::Rails::LabelComponent.new(text: "Email", for_id: "email") %>
 <%= render RetroUI::Rails::InputComponent.new(type: :email, name: "email", html_options: { id: "email" }) %>
 <%= render RetroUI::Rails::TextareaComponent.new(name: "message") %>
+<%= render RetroUI::Rails::CheckboxComponent.new(name: "confirm") %>
+<%= render RetroUI::Rails::RadioComponent.new(name: "plan", value: "pro") %>
+<%= render RetroUI::Rails::SelectComponent.new(name: "size", options: [["Small", "s"], ["Large", "l"]]) %>
+
+<%= render RetroUI::Rails::SeparatorComponent.new %>
+<%= render RetroUI::Rails::SkeletonComponent.new(html_options: { class: "h-8 w-full" }) %>
+<%= render RetroUI::Rails::ProgressComponent.new(value: 40) %>
 
 <%= render RetroUI::Rails::CardComponent.new do %>
   <%= render RetroUI::Rails::CardHeaderComponent.new do %>
@@ -83,6 +90,21 @@ rails generate retro_ui:vendor
 
   <%= render RetroUI::Rails::CardContentComponent.new do %>
     Continue?
+  <% end %>
+<% end %>
+
+<%= render RetroUI::Rails::TableComponent.new do %>
+  <%= render RetroUI::Rails::TableHeaderComponent.new do %>
+    <%= render RetroUI::Rails::TableRowComponent.new do %>
+      <%= render RetroUI::Rails::TableHeadComponent.new do %>Quest<% end %>
+      <%= render RetroUI::Rails::TableHeadComponent.new do %>Status<% end %>
+    <% end %>
+  <% end %>
+  <%= render RetroUI::Rails::TableBodyComponent.new do %>
+    <%= render RetroUI::Rails::TableRowComponent.new do %>
+      <%= render RetroUI::Rails::TableCellComponent.new do %>Ship gem<% end %>
+      <%= render RetroUI::Rails::TableCellComponent.new do %>In progress<% end %>
+    <% end %>
   <% end %>
 <% end %>
 ```
@@ -103,7 +125,7 @@ rails generate retro_ui:vendor
 
 Files are copied to `app/components/retro_ui` and `app/assets/stylesheets/retro_ui/theme.css`. Namespaces are rewritten from `RetroUI::Rails` to `RetroUI`, so vendored components are application code and do not depend on the engine namespace.
 
-Vendored components currently include button, card, badge, alert, input, textarea, and label primitives.
+Vendored components currently include button, card, badge, alert, input, textarea, label, checkbox, radio, select, separator, skeleton, progress, and table primitives.
 
 Existing files are not overwritten unless you pass `--force`:
 
