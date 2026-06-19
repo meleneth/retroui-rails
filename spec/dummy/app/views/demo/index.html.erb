@@ -66,22 +66,22 @@
 
         connect() {
           const first = this.triggerTargets[0]
-          const value = this.hasDefaultValueValue ? this.defaultValueValue : first?.dataset.retroUiTabsValueParam
+          const value = this.hasDefaultValueValue ? this.defaultValueValue : first?.getAttribute("data-retro-ui--tabs-value-param")
           if (value) this.activate(value)
         }
 
         select(event) {
-          this.activate(event.params.value)
+          this.activate(event.params.value || event.currentTarget.getAttribute("data-retro-ui--tabs-value-param"))
         }
 
         activate(value) {
           this.triggerTargets.forEach((trigger) => {
-            const active = trigger.dataset.retroUiTabsValueParam === value
+            const active = trigger.getAttribute("data-retro-ui--tabs-value-param") === value
             trigger.dataset.state = active ? "active" : "inactive"
             trigger.setAttribute("aria-selected", active ? "true" : "false")
           })
           this.contentTargets.forEach((content) => {
-            content.hidden = content.dataset.retroUiTabsValue !== value
+            content.hidden = content.getAttribute("data-retro-ui--tabs-value") !== value
           })
         }
       }

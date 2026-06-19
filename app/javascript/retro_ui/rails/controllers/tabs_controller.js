@@ -10,18 +10,18 @@ export default class extends Controller {
   }
 
   select(event) {
-    this.activate(event.params.value)
+    this.activate(event.params.value || event.currentTarget.getAttribute("data-retro-ui--tabs-value-param"))
   }
 
   activate(value) {
     this.triggerTargets.forEach((trigger) => {
-      const active = trigger.dataset.retroUiTabsValueParam === value
+      const active = this.triggerValue(trigger) === value
       trigger.dataset.state = active ? "active" : "inactive"
       trigger.setAttribute("aria-selected", active ? "true" : "false")
     })
 
     this.contentTargets.forEach((content) => {
-      content.hidden = content.dataset.retroUiTabsValue !== value
+      content.hidden = this.contentValue(content) !== value
     })
   }
 
@@ -31,10 +31,18 @@ export default class extends Controller {
 
   get activeTriggerValue() {
     const trigger = this.triggerTargets.find((item) => item.dataset.state === "active")
-    return trigger ? trigger.dataset.retroUiTabsValueParam : null
+    return trigger ? this.triggerValue(trigger) : null
   }
 
   get firstTriggerValue() {
-    return this.triggerTargets[0] ? this.triggerTargets[0].dataset.retroUiTabsValueParam : null
+    return this.triggerTargets[0] ? this.triggerValue(this.triggerTargets[0]) : null
+  }
+
+  triggerValue(trigger) {
+    return trigger.getAttribute("data-retro-ui--tabs-value-param")
+  }
+
+  contentValue(content) {
+    return content.getAttribute("data-retro-ui--tabs-value")
   }
 }

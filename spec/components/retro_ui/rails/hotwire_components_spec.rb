@@ -29,6 +29,13 @@ RSpec.describe "RetroUI Hotwire components", type: :component do
     expect(fragment.at_css("[role='tabpanel']")["data-retro-ui--tabs-value"]).to eq("preview")
   end
 
+  it "uses explicit attribute reads in the tabs controller for double-hyphen data names" do
+    controller = Rails.root.join("../../app/javascript/retro_ui/rails/controllers/tabs_controller.js").expand_path.read
+
+    expect(controller).to include('getAttribute("data-retro-ui--tabs-value-param")')
+    expect(controller).to include('getAttribute("data-retro-ui--tabs-value")')
+  end
+
   it "renders dialog trigger content and close wiring" do
     fragment = render_component(RetroUI::Rails::DialogComponent.new) do
       vc_test_controller.view_context.render(RetroUI::Rails::DialogTriggerComponent.new(label: "Open")) +
