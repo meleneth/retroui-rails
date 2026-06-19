@@ -77,6 +77,39 @@ rails generate retro_ui:vendor
 <%= render RetroUI::Rails::SeparatorComponent.new %>
 <%= render RetroUI::Rails::SkeletonComponent.new(html_options: { class: "h-8 w-full" }) %>
 <%= render RetroUI::Rails::ProgressComponent.new(value: 40) %>
+<%= render RetroUI::Rails::SwitchComponent.new(name: "enabled") %>
+
+<%= render RetroUI::Rails::AvatarComponent.new do %>
+  <%= render RetroUI::Rails::AvatarFallbackComponent.new(text: "RU") %>
+<% end %>
+
+<%= render RetroUI::Rails::AspectRatioComponent.new(ratio: "16/9") do %>
+  <img src="/preview.png" alt="Preview" class="h-full w-full object-cover">
+<% end %>
+
+<%= render RetroUI::Rails::BreadcrumbComponent.new do %>
+  <%= render RetroUI::Rails::BreadcrumbListComponent.new do %>
+    <%= render RetroUI::Rails::BreadcrumbItemComponent.new do %>
+      <%= render RetroUI::Rails::BreadcrumbLinkComponent.new(href: "/", text: "Home") %>
+    <% end %>
+    <%= render RetroUI::Rails::BreadcrumbSeparatorComponent.new %>
+    <%= render RetroUI::Rails::BreadcrumbItemComponent.new do %>
+      <%= render RetroUI::Rails::BreadcrumbPageComponent.new(text: "Docs") %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render RetroUI::Rails::PaginationComponent.new do %>
+  <%= render RetroUI::Rails::PaginationContentComponent.new do %>
+    <%= render RetroUI::Rails::PaginationItemComponent.new do %>
+      <%= render RetroUI::Rails::PaginationLinkComponent.new(href: "?page=1", label: "1", active: true) %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Inventory") %>
+<%= render RetroUI::Rails::CodeComponent.new(text: "rails generate retro_ui:vendor") %>
+<%= render RetroUI::Rails::KbdComponent.new(text: "K") %>
 
 <%= render RetroUI::Rails::CardComponent.new do %>
   <%= render RetroUI::Rails::CardHeaderComponent.new do %>
@@ -125,7 +158,7 @@ rails generate retro_ui:vendor
 
 Files are copied to `app/components/retro_ui` and `app/assets/stylesheets/retro_ui/theme.css`. Namespaces are rewritten from `RetroUI::Rails` to `RetroUI`, so vendored components are application code and do not depend on the engine namespace.
 
-Vendored components currently include button, card, badge, alert, input, textarea, label, checkbox, radio, select, separator, skeleton, progress, and table primitives.
+Vendored components currently include button, card, badge, alert, input, textarea, label, checkbox, radio, select, separator, skeleton, progress, table, avatar, aspect ratio, breadcrumb, pagination, typography, code, kbd, and switch primitives.
 
 Existing files are not overwritten unless you pass `--force`:
 

@@ -34,6 +34,14 @@ RSpec.describe RetroUI::Generators::VendorGenerator, type: :generator do
     expect(destination_file("app/components/retro_ui/progress_component.rb")).to exist
     expect(destination_file("app/components/retro_ui/table_component.rb")).to exist
     expect(destination_file("app/components/retro_ui/table_cell_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/avatar_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/aspect_ratio_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/breadcrumb_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/pagination_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/typography_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/code_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/kbd_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/switch_component.rb")).to exist
     expect(destination_file("app/assets/stylesheets/retro_ui/theme.css")).to exist
   end
 

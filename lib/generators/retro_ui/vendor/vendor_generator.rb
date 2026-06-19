@@ -64,6 +64,41 @@ module RetroUI
         table_cell_component.html.erb
         table_caption_component.rb
         table_caption_component.html.erb
+        avatar_component.rb
+        avatar_component.html.erb
+        avatar_image_component.rb
+        avatar_image_component.html.erb
+        avatar_fallback_component.rb
+        avatar_fallback_component.html.erb
+        aspect_ratio_component.rb
+        aspect_ratio_component.html.erb
+        breadcrumb_component.rb
+        breadcrumb_component.html.erb
+        breadcrumb_list_component.rb
+        breadcrumb_list_component.html.erb
+        breadcrumb_item_component.rb
+        breadcrumb_item_component.html.erb
+        breadcrumb_link_component.rb
+        breadcrumb_link_component.html.erb
+        breadcrumb_page_component.rb
+        breadcrumb_page_component.html.erb
+        breadcrumb_separator_component.rb
+        breadcrumb_separator_component.html.erb
+        pagination_component.rb
+        pagination_component.html.erb
+        pagination_content_component.rb
+        pagination_content_component.html.erb
+        pagination_item_component.rb
+        pagination_item_component.html.erb
+        pagination_link_component.rb
+        pagination_link_component.html.erb
+        typography_component.rb
+        code_component.rb
+        code_component.html.erb
+        kbd_component.rb
+        kbd_component.html.erb
+        switch_component.rb
+        switch_component.html.erb
       ].freeze
 
       def copy_components
