@@ -21,6 +21,11 @@ RSpec.describe RetroUI::Generators::VendorGenerator, type: :generator do
     expect(destination_file("app/components/retro_ui/button_component.rb")).to exist
     expect(destination_file("app/components/retro_ui/button_component.html.erb")).to exist
     expect(destination_file("app/components/retro_ui/card_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/badge_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/alert_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/input_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/textarea_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/label_component.rb")).to exist
     expect(destination_file("app/assets/stylesheets/retro_ui/theme.css")).to exist
   end
 

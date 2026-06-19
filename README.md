@@ -54,6 +54,23 @@ rails generate retro_ui:vendor
   Read Docs
 <% end %>
 
+<%= render RetroUI::Rails::BadgeComponent.new(variant: :secondary) do %>
+  New
+<% end %>
+
+<%= render RetroUI::Rails::AlertComponent.new do %>
+  <%= render RetroUI::Rails::AlertTitleComponent.new do %>
+    Autosave complete
+  <% end %>
+  <%= render RetroUI::Rails::AlertDescriptionComponent.new do %>
+    Your changes are safely tucked away.
+  <% end %>
+<% end %>
+
+<%= render RetroUI::Rails::LabelComponent.new(text: "Email", for_id: "email") %>
+<%= render RetroUI::Rails::InputComponent.new(type: :email, name: "email", html_options: { id: "email" }) %>
+<%= render RetroUI::Rails::TextareaComponent.new(name: "message") %>
+
 <%= render RetroUI::Rails::CardComponent.new do %>
   <%= render RetroUI::Rails::CardHeaderComponent.new do %>
     <%= render RetroUI::Rails::CardTitleComponent.new do %>
@@ -85,6 +102,8 @@ rails generate retro_ui:vendor
 ```
 
 Files are copied to `app/components/retro_ui` and `app/assets/stylesheets/retro_ui/theme.css`. Namespaces are rewritten from `RetroUI::Rails` to `RetroUI`, so vendored components are application code and do not depend on the engine namespace.
+
+Vendored components currently include button, card, badge, alert, input, textarea, and label primitives.
 
 Existing files are not overwritten unless you pass `--force`:
 

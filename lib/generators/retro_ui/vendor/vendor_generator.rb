@@ -22,6 +22,20 @@ module RetroUI
         card_description_component.html.erb
         card_content_component.rb
         card_content_component.html.erb
+        badge_component.rb
+        badge_component.html.erb
+        alert_component.rb
+        alert_component.html.erb
+        alert_title_component.rb
+        alert_title_component.html.erb
+        alert_description_component.rb
+        alert_description_component.html.erb
+        input_component.rb
+        input_component.html.erb
+        textarea_component.rb
+        textarea_component.html.erb
+        label_component.rb
+        label_component.html.erb
       ].freeze
 
       def copy_components
