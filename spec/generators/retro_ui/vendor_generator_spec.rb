@@ -42,7 +42,10 @@ RSpec.describe RetroUI::Generators::VendorGenerator, type: :generator do
     expect(destination_file("app/components/retro_ui/code_component.rb")).to exist
     expect(destination_file("app/components/retro_ui/kbd_component.rb")).to exist
     expect(destination_file("app/components/retro_ui/switch_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/toast_component.rb")).to exist
+    expect(destination_file("app/components/retro_ui/toast_close_component.html.erb")).to exist
     expect(destination_file("app/assets/stylesheets/retro_ui/theme.css")).to exist
+    expect(destination_file("app/javascript/controllers/retro_ui/toast_controller.js")).to exist
   end
 
   it "rewrites namespaces from RetroUI::Rails to RetroUI" do
@@ -54,6 +57,14 @@ RSpec.describe RetroUI::Generators::VendorGenerator, type: :generator do
     expect(content).not_to include("module Rails")
     expect(content).not_to include("RetroUI::ClassNames")
     expect(content).to include("def class_names(*values)")
+  end
+
+  it "copies Stimulus controllers" do
+    run_generator
+
+    content = destination_file("app/javascript/controllers/retro_ui/toast_controller.js").read
+    expect(content).to include('from "@hotwired/stimulus"')
+    expect(content).to include("dismiss(event)")
   end
 
   it "does not overwrite without --force" do

@@ -24,6 +24,13 @@ module RetroUI
         say "  rails generate retro_ui:vendor"
         say ""
         say "Vendored components are app-owned and should be included by the app/components globs above."
+        say ""
+        say "Hotwire components require Stimulus. Register the toast controller with your Stimulus application:"
+        say '  pin "retro_ui/rails/controllers/toast_controller", to: "retro_ui/rails/controllers/toast_controller.js"'
+        say '  import ToastController from "retro_ui/rails/controllers/toast_controller"'
+        say '  application.register("retro-ui--toast", ToastController)'
+        say ""
+        say "When vendored, copy or register app/javascript/controllers/retro_ui/toast_controller.js instead."
       end
 
       private

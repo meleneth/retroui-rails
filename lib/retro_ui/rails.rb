@@ -50,6 +50,11 @@ require_relative "../../app/components/retro_ui/rails/typography_component"
 require_relative "../../app/components/retro_ui/rails/code_component"
 require_relative "../../app/components/retro_ui/rails/kbd_component"
 require_relative "../../app/components/retro_ui/rails/switch_component"
+require_relative "../../app/components/retro_ui/rails/toast_viewport_component"
+require_relative "../../app/components/retro_ui/rails/toast_component"
+require_relative "../../app/components/retro_ui/rails/toast_title_component"
+require_relative "../../app/components/retro_ui/rails/toast_description_component"
+require_relative "../../app/components/retro_ui/rails/toast_close_component"
 
 module RetroUI
   module Rails

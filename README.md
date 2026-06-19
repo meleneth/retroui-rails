@@ -21,7 +21,7 @@ bundle install
 rails generate retro_ui:install
 ```
 
-`retroui-rails` depends on Rails and ViewComponent. It does not require React, JavaScript, Node, or vendored fonts.
+`retroui-rails` depends on Rails, ViewComponent, and Stimulus for interactive Hotwire components. It does not require React, Node, or vendored fonts.
 
 ## Tailwind setup
 
@@ -111,6 +111,14 @@ rails generate retro_ui:vendor
 <%= render RetroUI::Rails::CodeComponent.new(text: "rails generate retro_ui:vendor") %>
 <%= render RetroUI::Rails::KbdComponent.new(text: "K") %>
 
+<%= render RetroUI::Rails::ToastViewportComponent.new do %>
+  <%= render RetroUI::Rails::ToastComponent.new(duration: 4000) do %>
+    <%= render RetroUI::Rails::ToastTitleComponent.new(text: "Saved") %>
+    <%= render RetroUI::Rails::ToastDescriptionComponent.new(text: "Your changes were saved.") %>
+    <%= render RetroUI::Rails::ToastCloseComponent.new %>
+  <% end %>
+<% end %>
+
 <%= render RetroUI::Rails::CardComponent.new do %>
   <%= render RetroUI::Rails::CardHeaderComponent.new do %>
     <%= render RetroUI::Rails::CardTitleComponent.new do %>
@@ -142,6 +150,19 @@ rails generate retro_ui:vendor
 <% end %>
 ```
 
+Hotwire-backed components use Stimulus controllers. Register the toast controller with your Stimulus application:
+
+```ruby
+# config/importmap.rb
+pin "retro_ui/rails/controllers/toast_controller", to: "retro_ui/rails/controllers/toast_controller.js"
+```
+
+```js
+import ToastController from "retro_ui/rails/controllers/toast_controller"
+
+application.register("retro-ui--toast", ToastController)
+```
+
 ## Theme tokens
 
 The theme stylesheet defines CSS variables only. Component styling remains in Tailwind utility classes.
@@ -156,9 +177,9 @@ Vendoring copies the current gem component source into your application:
 rails generate retro_ui:vendor
 ```
 
-Files are copied to `app/components/retro_ui` and `app/assets/stylesheets/retro_ui/theme.css`. Namespaces are rewritten from `RetroUI::Rails` to `RetroUI`, so vendored components are application code and do not depend on the engine namespace.
+Files are copied to `app/components/retro_ui`, `app/javascript/controllers/retro_ui`, and `app/assets/stylesheets/retro_ui/theme.css`. Namespaces are rewritten from `RetroUI::Rails` to `RetroUI`, so vendored components are application code and do not depend on the engine namespace.
 
-Vendored components currently include button, card, badge, alert, input, textarea, label, checkbox, radio, select, separator, skeleton, progress, table, avatar, aspect ratio, breadcrumb, pagination, typography, code, kbd, and switch primitives.
+Vendored components currently include button, card, badge, alert, input, textarea, label, checkbox, radio, select, separator, skeleton, progress, table, avatar, aspect ratio, breadcrumb, pagination, typography, code, kbd, switch, and toast primitives.
 
 Existing files are not overwritten unless you pass `--force`:
 

@@ -99,6 +99,20 @@ module RetroUI
         kbd_component.html.erb
         switch_component.rb
         switch_component.html.erb
+        toast_viewport_component.rb
+        toast_viewport_component.html.erb
+        toast_component.rb
+        toast_component.html.erb
+        toast_title_component.rb
+        toast_title_component.html.erb
+        toast_description_component.rb
+        toast_description_component.html.erb
+        toast_close_component.rb
+        toast_close_component.html.erb
+      ].freeze
+
+      CONTROLLER_FILES = %w[
+        toast_controller.js
       ].freeze
 
       def copy_components
@@ -115,6 +129,15 @@ module RetroUI
           gem_root.join("app/assets/stylesheets/retro_ui/rails/theme.css"),
           destination_path.join("app/assets/stylesheets/retro_ui/theme.css")
         )
+      end
+
+      def copy_controllers
+        CONTROLLER_FILES.each do |filename|
+          copy_with_namespace_rewrite(
+            gem_root.join("app/javascript/retro_ui/rails/controllers/#{filename}"),
+            destination_path.join("app/javascript/controllers/retro_ui/#{filename}")
+          )
+        end
       end
 
       def print_done

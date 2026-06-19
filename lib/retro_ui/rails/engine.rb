@@ -12,7 +12,13 @@ module RetroUI
       config.eager_load_paths << root.join("app/components").to_s
 
       initializer "retroui_rails.assets" do |app|
-        app.config.assets.precompile += %w[retro_ui/rails/theme.css] if app.config.respond_to?(:assets)
+        if app.config.respond_to?(:assets)
+          app.config.assets.paths << root.join("app/javascript").to_s
+          app.config.assets.precompile += %w[
+            retro_ui/rails/theme.css
+            retro_ui/rails/controllers/toast_controller.js
+          ]
+        end
       end
     end
   end

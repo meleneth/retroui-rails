@@ -5,6 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RetroUI Rails Demo</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script type="module">
+      import { Application, Controller } from "https://cdn.jsdelivr.net/npm/@hotwired/stimulus@3.2.2/+esm"
+
+      class ToastController extends Controller {
+        static values = {
+          duration: { type: Number, default: 0 },
+          remove: { type: Boolean, default: true }
+        }
+
+        connect() {
+          if (this.durationValue > 0) {
+            this.timeout = window.setTimeout(() => this.dismiss(), this.durationValue)
+          }
+        }
+
+        disconnect() {
+          if (this.timeout) window.clearTimeout(this.timeout)
+        }
+
+        dismiss(event) {
+          if (event) event.preventDefault()
+          this.element.dataset.state = "closed"
+          window.setTimeout(() => {
+            if (this.removeValue) {
+              this.element.remove()
+            } else {
+              this.element.hidden = true
+            }
+          }, 200)
+        }
+      }
+
+      const application = Application.start()
+      application.register("retro-ui--toast", ToastController)
+    </script>
     <style type="text/tailwindcss">
       @theme {
         --color-background: hsl(var(--background));
@@ -63,6 +98,14 @@
     <main>
       <%= render RetroUI::Rails::TypographyComponent.new(as: :h1, text: "RetroUI Rails") %>
       <%= render RetroUI::Rails::TypographyComponent.new(as: :lead, text: "A Tailwind-first ViewComponent port of RetroUI primitives.") %>
+
+      <%= render RetroUI::Rails::ToastViewportComponent.new do %>
+        <%= render RetroUI::Rails::ToastComponent.new(duration: 0) do %>
+          <%= render RetroUI::Rails::ToastTitleComponent.new(text: "Hotwire toast online") %>
+          <%= render RetroUI::Rails::ToastDescriptionComponent.new(text: "This one is powered by a Stimulus controller.") %>
+          <%= render RetroUI::Rails::ToastCloseComponent.new %>
+        <% end %>
+      <% end %>
 
       <section>
         <%= render RetroUI::Rails::TypographyComponent.new(as: :h2, text: "Buttons") %>
