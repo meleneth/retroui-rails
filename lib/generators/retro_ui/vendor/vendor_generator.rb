@@ -5,6 +5,8 @@ require "rails/generators"
 module RetroUI
   module Generators
     class VendorGenerator < ::Rails::Generators::Base
+      namespace "retro_ui:vendor"
+
       desc "Copy RetroUI Rails components into the host application."
 
       class_option :force, type: :boolean, default: false, desc: "Overwrite existing vendored files."

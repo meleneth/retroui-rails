@@ -5,6 +5,8 @@ require "rails/generators"
 module RetroUI
   module Generators
     class InstallGenerator < ::Rails::Generators::Base
+      namespace "retro_ui:install"
+
       desc "Print RetroUI Rails installation instructions."
 
       def print_tailwind_instructions

@@ -16,6 +16,10 @@ RSpec.describe RetroUI::Generators::InstallGenerator, type: :generator do
     FileUtils.mkdir_p(destination_root)
   end
 
+  it "uses the documented generator namespace" do
+    expect(described_class.namespace).to eq("retro_ui:install")
+  end
+
   it "prints Tailwind setup instructions" do
     messages = []
     generator = described_class.new

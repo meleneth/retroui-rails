@@ -16,6 +16,10 @@ RSpec.describe RetroUI::Generators::VendorGenerator, type: :generator do
     FileUtils.mkdir_p(destination_root)
   end
 
+  it "uses the documented generator namespace" do
+    expect(described_class.namespace).to eq("retro_ui:vendor")
+  end
+
   it "copies expected files" do
     run_generator
 
