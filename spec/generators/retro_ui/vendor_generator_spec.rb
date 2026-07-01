@@ -3,14 +3,15 @@
 require "spec_helper"
 require "generators/retro_ui/vendor/vendor_generator"
 require "securerandom"
+require "tmpdir"
 
 RSpec.describe RetroUI::Generators::VendorGenerator, type: :generator do
   tests RetroUI::Generators::VendorGenerator
 
-  destination File.expand_path("../../tmp/vendor_generator", __dir__)
+  destination File.join(Dir.tmpdir, "retroui_vendor_generator")
 
   before do
-    self.class.destination File.expand_path("../../tmp/vendor_generator_#{SecureRandom.hex(8)}", __dir__)
+    self.class.destination File.join(Dir.tmpdir, "retroui_vendor_generator_#{SecureRandom.hex(8)}")
     FileUtils.rm_rf(destination_root)
     FileUtils.mkdir_p(destination_root)
   end

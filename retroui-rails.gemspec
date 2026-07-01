@@ -22,13 +22,13 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rails", ">= 7.0", "< 8.0"
+  spec.add_dependency "rails", ">= 7.0", "< 9.0"
   spec.add_dependency "stimulus-rails", ">= 1.3"
   spec.add_dependency "view_component", ">= 3.0"
 
   spec.add_development_dependency "capybara"
   spec.add_development_dependency "nokogiri"
   spec.add_development_dependency "puma", ">= 6.0"
-  spec.add_development_dependency "rspec-rails", "< 8.0"
+  spec.add_development_dependency "rspec-rails", "< 9.0"
   spec.add_development_dependency "tzinfo-data"
 end

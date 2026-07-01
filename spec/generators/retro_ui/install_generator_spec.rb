@@ -3,14 +3,15 @@
 require "spec_helper"
 require "generators/retro_ui/install/install_generator"
 require "securerandom"
+require "tmpdir"
 
 RSpec.describe RetroUI::Generators::InstallGenerator, type: :generator do
   tests RetroUI::Generators::InstallGenerator
 
-  destination File.expand_path("../../tmp/install_generator", __dir__)
+  destination File.join(Dir.tmpdir, "retroui_install_generator")
 
   before do
-    self.class.destination File.expand_path("../../tmp/install_generator_#{SecureRandom.hex(8)}", __dir__)
+    self.class.destination File.join(Dir.tmpdir, "retroui_install_generator_#{SecureRandom.hex(8)}")
     FileUtils.rm_rf(destination_root)
     FileUtils.mkdir_p(destination_root)
   end

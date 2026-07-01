@@ -13,5 +13,6 @@ module Dummy
     config.eager_load = false
     config.secret_key_base = "test"
     config.hosts.clear
+    config.logger = Logger.new(IO::NULL) if Rails.env.test?
   end
 end
